@@ -1,16 +1,31 @@
 "use client";
 
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import Button from "@/components/Button";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    setSent(true);
-    e.currentTarget.reset();
+    const form = e.currentTarget;
+
+    try {
+      await emailjs.sendForm(
+        "service_72rpqqd",
+        "template_z3xpadf",
+        form,
+        "HsBCxCtib-6n_PGtl"
+      );
+
+      setSent(true);
+      form.reset();
+    } catch (error) {
+      console.error("Email sending failed:", error);
+      alert("Something went wrong. Please try again.");
+    }
   }
 
   return (
@@ -115,7 +130,7 @@ export default function ContactPage() {
             <div>
               <small>PHONE</small>
 
-              <a href="tel:+919876543210">
+              <a href="tel:+919960045758">
                 +91 99600 45758
               </a>
             </div>
