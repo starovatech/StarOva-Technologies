@@ -51,7 +51,7 @@ export default function Navbar() {
 
         {/* CTA */}
         <Link
-  href="https://wa.me/919960045758?text=Hi%20Webnexa%2C%20I%20would%20like%20to%20discuss%20a%20project."
+  href="https://wa.me/919960045758?text=Hi%20starOva%2C%20I%20would%20like%20to%20discuss%20a%20project."
   target="_blank"
   rel="noopener noreferrer"
   className="nav-talk"
