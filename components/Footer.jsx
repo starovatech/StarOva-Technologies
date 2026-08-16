@@ -78,7 +78,7 @@ export default function Footer() {
               starOvatech@gmail.com
             </a>
 
-            <a href="tel:+919876543210">
+            <a href="tel:+919960045758">
               +91 99600 45758
             </a>
 
