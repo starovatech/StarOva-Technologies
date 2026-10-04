@@ -1,11 +1,7 @@
 import Link from "next/link";
 
-export default function Button({ href, children, variant = "primary", type = "button" }) {
-  const className = `button button-${variant}`;
+export default function Button({ href, children, className = "" }) {
+  const classes = `inline-flex items-center justify-center rounded-full bg-[#291c0e] px-6 py-3.5 text-sm font-semibold text-[#e1d4c2] transition hover:bg-[#6e473b] ${className}`;
 
-  if (href) {
-    return <Link href={href} className={className}>{children}</Link>;
-  }
-
-  return <button type={type} className={className}>{children}</button>;
+  return href ? <Link href={href} className={classes}>{children}</Link> : <button className={classes}>{children}</button>;
 }

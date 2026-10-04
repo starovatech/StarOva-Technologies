@@ -1,38 +1,43 @@
-# starOva
+# starOva Technologies — warm editorial website
 
-A dark, premium Next.js website inspired by the supplied reference design and recolored around the starOva logo.
+This is a fresh Next.js + Tailwind CSS implementation for starOva Technologies.
 
-## Stack
+## Design direction
 
-- Next.js App Router
-- React / JavaScript
-- CSS
-- No UI library required
+The interface is based on the supplied warm palette:
 
-## Setup
+- `#291C0E` — deep brown
+- `#6E473B` — brown
+- `#A78D78` — muted taupe
+- `#BEB5A9` — warm gray
+- `#E1D4C2` — cream
+
+The visual approach is intentionally lightweight: Tailwind utilities do the page styling and `globals.css` only contains the small amount of true global behavior.
+
+## Pages
+
+- `/` — home
+- `/about` — about
+- `/solutions` — solutions
+- `/contact` — contact
+
+## Logo
+
+Place the supplied transparent logo at:
+
+`public/images/logo/starOva.png`
+
+The supplied logo is already included in this package.
+
+## Run
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open http://localhost:3000
-
-## Logo
-
-Place the supplied WEBNEXA logo at:
-
-`public/images/logo/starOva.png`
-
-The included project package already contains that file.
-
-## Pages
-
-- `/`
-- `/about`
-- `/solutions`
-- `/contact`
+Then open the local URL shown by Next.js.
 
 ## Notes
 
-The contact form is front-end only. Connect it to EmailJS, Formspree, Resend, a Next.js API route, or your preferred backend before production.
+The contact form currently posts to FormSubmit using the existing starOva email address. Replace that endpoint later if a dedicated backend/email provider is preferred.

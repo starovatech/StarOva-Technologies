@@ -4,21 +4,19 @@ import Footer from "@/components/Footer";
 
 export const metadata = {
   title: {
-    default: "starOva | A Connection Between Technology and Business",
-    template: "%s | WEBNEXA"
+    default: "starOva Technologies",
+    template: "%s | starOva Technologies",
   },
   description:
-    "starOva technologies builds modern websites, web applications and digital experiences that connect technology with business.",
+    "starOva Technologies builds thoughtful digital products, websites, data experiences and technology solutions for modern businesses.",
   keywords: [
     "starOva",
+    "starOva Technologies",
     "web development",
-    "website design",
-    "Next.js development",
-    "business websites",
-    "web applications",
     "digital solutions",
-    "Bi developer",
-  ]
+    "data analytics",
+    "business technology",
+  ],
 };
 
 export default function RootLayout({ children }) {
