@@ -1,81 +1,159 @@
-import { Mail, MapPin, Phone, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Mail, Phone, MessageCircle, Clock } from "lucide-react";
+import PageHeader from "@/components/PageHeader";
+import { contact, services } from "@/lib/site";
+
+export const metadata = {
+  title: "Contact",
+  description:
+    "Start a project with StarOva Technologies. Tell us about your website, brand or data needs.",
+};
+
+const channels = [
+  { label: "Email", value: contact.email, href: `mailto:${contact.email}`, icon: Mail },
+  { label: "Phone", value: contact.phone, href: contact.phoneHref, icon: Phone },
+  { label: "WhatsApp", value: "Chat with us", href: contact.whatsapp, icon: MessageCircle, external: true },
+];
+
+const budgets = [
+  "Under Rs. 2,000",
+  "Rs. 2,500 – Rs. 5,000",
+  "Rs. 5,500 – Rs. 10,000",
+  "Rs. 10,500 – Rs. 20,000",
+  "Rs. 20,000+",
+];
+
+const field =
+  "mt-2 w-full rounded-xl border border-stone/70 bg-white px-4 py-3 text-sm text-espresso outline-none transition placeholder:text-taupe focus:border-cocoa focus:ring-4 focus:ring-cocoa/10";
 
 export default function ContactPage() {
   return (
-    <div>
-      <section className="border-b border-[#6e473b]/15">
-        <div className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-36">
-          <p className="text-xs font-bold uppercase tracking-[.2em] text-[#6e473b]">Contact</p>
-          <h1 className="mt-6 max-w-4xl text-5xl font-medium leading-[.98] tracking-[-.055em] sm:text-7xl">
-            Tell us what you&apos;re
-            <br />
-            <span className="text-[#6e473b]">building.</span>
-          </h1>
-          <p className="mt-8 max-w-2xl text-lg leading-8 text-[#6e473b]/75">
-            A website, a data problem, a new digital product or an idea that is
-            still taking shape — start with a message.
-          </p>
-        </div>
-      </section>
+    <>
+      <PageHeader
+        eyebrow="Start a project"
+        title="Let's make"
+        accent="something happen."
+      >
+        Have an idea, a business problem or simply want to improve your
+        digital presence? Tell us what you&apos;re thinking. We&apos;ll take it
+        from there.
+      </PageHeader>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-24 lg:grid-cols-[.7fr_1.3fr] lg:px-10">
+      <section className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:py-20 lg:grid-cols-[0.75fr_1.25fr]">
         <div className="space-y-4">
-          {[
-            [Mail, "Email", "starovatech@gmail.com", "mailto:starovatech@gmail.com"],
-            [Phone, "Phone", "+91 99600 45758", "tel:+919960045758"],
-            [MapPin, "Location", "India", "#"],
-          ].map(([Icon, label, value, href]) => (
-            <a key={label} href={href} className="block rounded-2xl border border-[#6e473b]/15 bg-[#beb5a9]/20 p-5 transition hover:bg-[#beb5a9]/35">
-              <Icon size={18} className="text-[#6e473b]" strokeWidth={1.6} />
-              <p className="mt-6 text-xs font-bold uppercase tracking-[.16em] text-[#6e473b]/60">{label}</p>
-              <p className="mt-2 text-sm font-semibold">{value}</p>
+          {channels.map(({ label, value, href, icon: Icon, external }) => (
+            <a
+              key={label}
+              href={href}
+              {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+              className="group flex items-center gap-4 rounded-2xl border border-stone/50 bg-white p-5 transition-colors hover:border-taupe hover:bg-cream/30"
+            >
+              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-cream text-cocoa transition-colors group-hover:bg-espresso group-hover:text-cream">
+                <Icon className="size-5" strokeWidth={1.75} aria-hidden />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-xs font-semibold uppercase tracking-[0.16em] text-cocoa/70">
+                  {label}
+                </span>
+                <span className="mt-1 block truncate text-sm font-semibold text-espresso">
+                  {value}
+                </span>
+              </span>
+              <ArrowUpRight className="size-4 text-taupe group-hover:text-espresso" aria-hidden />
             </a>
           ))}
+
+          <div className="flex items-start gap-4 rounded-2xl bg-cream/50 p-5">
+            <Clock className="mt-0.5 size-5 shrink-0 text-cocoa" strokeWidth={1.75} aria-hidden />
+            <p className="text-sm leading-6 text-cocoa/90">
+              <span className="font-semibold text-espresso">
+                Currently accepting new projects.
+              </span>{" "}
+              We&apos;ll review your enquiry and get back to you as soon as
+              possible.
+            </p>
+          </div>
         </div>
 
-        <div className="rounded-[2rem] border border-[#6e473b]/20 bg-[#e1d4c2] p-7 sm:p-10">
-          <div className="flex items-start justify-between gap-5">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[.2em] text-[#6e473b]">Start a project</p>
-              <h2 className="mt-3 text-3xl font-medium tracking-[-.04em]">What can we help you build?</h2>
-            </div>
-            <span className="text-xs text-[#6e473b]/45">01 / 01</span>
-          </div>
+        <div className="rounded-[2rem] border border-stone/50 bg-cream/30 p-6 sm:p-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cocoa">
+            Project enquiry
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-espresso">
+            Tell us what you&apos;re <span className="text-cocoa">building.</span>
+          </h2>
 
-          <form className="mt-10 space-y-6" action="https://formsubmit.co/starovatech@gmail.com" method="POST">
-            <input type="hidden" name="_subject" value="New project enquiry — starOva Technologies" />
+          <form
+            action={`https://formsubmit.co/${contact.email}`}
+            method="POST"
+            className="mt-10 space-y-5"
+          >
+            <input type="hidden" name="_subject" value="New project enquiry — StarOva Technologies" />
             <input type="hidden" name="_captcha" value="false" />
-            <div className="grid gap-6 sm:grid-cols-2">
-              <label className="text-xs font-semibold text-[#6e473b]">
+            <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              <label className="block text-sm font-medium text-espresso">
                 Name
-                <input name="name" required className="mt-2 w-full border-b border-[#6e473b]/25 bg-transparent px-0 py-3 text-sm outline-none placeholder:text-[#6e473b]/35 focus:border-[#291c0e]" placeholder="Your name" />
+                <input name="name" required autoComplete="name" placeholder="Your name" className={field} />
               </label>
-              <label className="text-xs font-semibold text-[#6e473b]">
+              <label className="block text-sm font-medium text-espresso">
                 Email
-                <input type="email" name="email" required className="mt-2 w-full border-b border-[#6e473b]/25 bg-transparent px-0 py-3 text-sm outline-none placeholder:text-[#6e473b]/35 focus:border-[#291c0e]" placeholder="you@example.com" />
+                <input type="email" name="email" required autoComplete="email" placeholder="you@example.com" className={field} />
               </label>
             </div>
-            <label className="block text-xs font-semibold text-[#6e473b]">
-              What do you need?
-              <select name="service" className="mt-2 w-full border-b border-[#6e473b]/25 bg-transparent px-0 py-3 text-sm outline-none focus:border-[#291c0e]">
-                <option>Website development</option>
-                <option>Brand & identity</option>
-                <option>Data analytics</option>
-                <option>Business intelligence</option>
-                <option>Something else</option>
-              </select>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              <label className="block text-sm font-medium text-espresso">
+                What do you need?
+                <select name="service" defaultValue={services[0].title} className={field}>
+                  {services.map(({ title }) => (
+                    <option key={title}>{title}</option>
+                  ))}
+                  <option>Something else</option>
+                </select>
+              </label>
+              <label className="block text-sm font-medium text-espresso">
+                Project budget
+                <select name="budget" defaultValue="" className={field}>
+                  <option value="" disabled>
+                    Select a range
+                  </option>
+                  {budgets.map((b) => (
+                    <option key={b}>{b}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            <label className="block text-sm font-medium text-espresso">
+              Project details
+              <textarea
+                name="message"
+                required
+                rows={6}
+                placeholder="Tell us about your business, your idea and what you want to achieve…"
+                className={`${field} resize-none`}
+              />
             </label>
-            <label className="block text-xs font-semibold text-[#6e473b]">
-              Message
-              <textarea name="message" required rows={5} className="mt-2 w-full resize-none border-b border-[#6e473b]/25 bg-transparent px-0 py-3 text-sm outline-none placeholder:text-[#6e473b]/35 focus:border-[#291c0e]" placeholder="Tell us a little about the project..." />
-            </label>
-            <button className="group inline-flex items-center gap-3 rounded-full bg-[#291c0e] px-6 py-3.5 text-sm font-semibold text-[#e1d4c2] transition hover:bg-[#6e473b]" type="submit">
-              Send enquiry
-              <ArrowUpRight size={16} className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
+
+            <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center">
+              <button
+                type="submit"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-espresso px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-cocoa"
+              >
+                Send enquiry
+                <ArrowUpRight
+                  className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  aria-hidden
+                />
+              </button>
+              <p className="text-xs leading-5 text-cocoa/70">
+                No pressure, no complicated process. Just a conversation.
+              </p>
+            </div>
           </form>
         </div>
       </section>
-    </div>
+    </>
   );
 }

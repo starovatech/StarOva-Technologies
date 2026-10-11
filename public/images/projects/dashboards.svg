@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7d959a"/>
+      <stop offset="1" stop-color="#3b4a4f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.8" cy="0.1" r="0.6">
+      <stop offset="0" stop-color="#e1d4c2" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#e1d4c2" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6e473b" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#6e473b" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#0b1416" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#bg)"/>
+  <rect width="600" height="600" fill="url(#glow)"/>
+
+  <g filter="url(#shadow)">
+    <!-- Panel + sidebar -->
+    <rect x="50" y="70" width="500" height="400" rx="18" fill="#faf6f0"/>
+    <path d="M68 70h50v400H68a18 18 0 0 1-18-18V88a18 18 0 0 1 18-18z" fill="#291c0e"/>
+    <rect x="70" y="92" width="28" height="28" rx="8" fill="#a78d78"/>
+    <rect x="72" y="146" width="24" height="24" rx="7" fill="#e1d4c2"/>
+    <rect x="72" y="186" width="24" height="24" rx="7" fill="#6e473b"/>
+    <rect x="72" y="226" width="24" height="24" rx="7" fill="#6e473b"/>
+    <rect x="72" y="266" width="24" height="24" rx="7" fill="#6e473b"/>
+
+    <!-- Header -->
+    <rect x="140" y="92" width="130" height="13" rx="6.5" fill="#291c0e"/>
+    <rect x="140" y="111" width="80" height="7" rx="3.5" fill="#a78d78"/>
+    <rect x="420" y="90" width="110" height="24" rx="12" fill="#efe6da"/>
+    <circle cx="434" cy="102" r="5" fill="none" stroke="#a78d78" stroke-width="2"/>
+
+    <!-- KPI tiles -->
+    <g fill="#efe6da">
+      <rect x="140" y="134" width="120" height="74" rx="12"/>
+      <rect x="275" y="134" width="120" height="74" rx="12"/>
+      <rect x="410" y="134" width="120" height="74" rx="12"/>
+    </g>
+    <g fill="#a78d78">
+      <rect x="154" y="148" width="54" height="6" rx="3"/>
+      <rect x="289" y="148" width="54" height="6" rx="3"/>
+      <rect x="424" y="148" width="54" height="6" rx="3"/>
+    </g>
+    <g font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="24" fill="#291c0e">
+      <text x="154" y="188">84%</text>
+      <text x="289" y="188">2.4k</text>
+      <text x="424" y="188">+32%</text>
+    </g>
+    <polyline points="214,190 224,184 234,187 246,174" fill="none" stroke="#6e473b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="356,188 366,180 374,184 384,170" fill="none" stroke="#6e473b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Line chart -->
+    <rect x="140" y="222" width="255" height="150" rx="12" fill="#efe6da"/>
+    <rect x="154" y="236" width="70" height="7" rx="3.5" fill="#291c0e"/>
+    <g stroke="#e1d4c2" stroke-width="1.5">
+      <line x1="154" y1="270" x2="381" y2="270"/>
+      <line x1="154" y1="300" x2="381" y2="300"/>
+      <line x1="154" y1="330" x2="381" y2="330"/>
+    </g>
+    <path d="M154 340 L190 318 L224 326 L258 296 L292 304 L326 270 L360 280 L381 258 L381 358 L154 358 Z" fill="url(#area)"/>
+    <polyline points="154,340 190,318 224,326 258,296 292,304 326,270 360,280 381,258" fill="none" stroke="#6e473b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="326" cy="270" r="5" fill="#291c0e" stroke="#efe6da" stroke-width="2"/>
+
+    <!-- Donut -->
+    <rect x="410" y="222" width="120" height="150" rx="12" fill="#efe6da"/>
+    <rect x="424" y="236" width="50" height="7" rx="3.5" fill="#291c0e"/>
+    <circle cx="470" cy="308" r="32" fill="none" stroke="#e1d4c2" stroke-width="13"/>
+    <circle cx="470" cy="308" r="32" fill="none" stroke="#6e473b" stroke-width="13" stroke-dasharray="120 201" transform="rotate(-90 470 308)"/>
+    <circle cx="470" cy="308" r="32" fill="none" stroke="#a78d78" stroke-width="13" stroke-dasharray="50 201" stroke-dashoffset="-124" transform="rotate(-90 470 308)"/>
+
+    <!-- Bars -->
+    <rect x="140" y="386" width="390" height="66" rx="12" fill="#efe6da"/>
+    <g fill="#a78d78">
+      <rect x="160" y="420" width="16" height="20" rx="3"/>
+      <rect x="190" y="410" width="16" height="30" rx="3"/>
+      <rect x="220" y="414" width="16" height="26" rx="3"/>
+      <rect x="250" y="402" width="16" height="38" rx="3"/>
+      <rect x="310" y="408" width="16" height="32" rx="3"/>
+      <rect x="340" y="416" width="16" height="24" rx="3"/>
+      <rect x="370" y="404" width="16" height="36" rx="3"/>
+      <rect x="400" y="412" width="16" height="28" rx="3"/>
+      <rect x="430" y="406" width="16" height="34" rx="3"/>
+      <rect x="460" y="418" width="16" height="22" rx="3"/>
+      <rect x="490" y="410" width="16" height="30" rx="3"/>
+    </g>
+    <rect x="280" y="396" width="16" height="44" rx="3" fill="#291c0e"/>
+  </g>
+</svg>

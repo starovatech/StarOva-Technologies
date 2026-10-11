@@ -1,78 +1,143 @@
-import Link from "next/link";
-import { ArrowUpRight, Compass, HeartHandshake, Lightbulb, Target } from "lucide-react";
+import { Compass, Lightbulb, Gem, TrendingUp } from "lucide-react";
+import PageHeader from "@/components/PageHeader";
+import Eyebrow from "@/components/Eyebrow";
+import CallToAction from "@/components/CallToAction";
+import { process } from "@/lib/site";
+
+export const metadata = {
+  title: "About",
+  description:
+    "StarOva Technologies is a digital studio bringing design, development, branding and data together for growing businesses.",
+};
 
 const values = [
-  ["01", "Clarity", "Good technology should make complicated things easier to understand.", Compass],
-  ["02", "Craft", "We care about the small details because they shape how the whole product feels.", Lightbulb],
-  ["03", "Partnership", "We work with clients, not around them. Communication stays direct and practical.", HeartHandshake],
-  ["04", "Purpose", "Every screen, system and interaction should have a reason to exist.", Target],
+  ["Clarity", "Good technology should be easy to understand, navigate and use.", Compass],
+  ["Creativity", "We avoid generic solutions and give every project its own personality.", Lightbulb],
+  ["Quality", "From the smallest detail to the overall experience, we do things properly.", Gem],
+  ["Growth", "We build foundations that can evolve as your business grows.", TrendingUp],
+];
+
+const differences = [
+  "Design + Development",
+  "Web + Data",
+  "Creative + Analytical",
+  "Business + Technology",
 ];
 
 export default function AboutPage() {
   return (
-    <div>
-      <section className="border-b border-[#6e473b]/15">
-        <div className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-36">
-          <p className="text-xs font-bold uppercase tracking-[.2em] text-[#6e473b]">About starOva</p>
-          <h1 className="mt-6 max-w-5xl text-5xl font-medium leading-[.98] tracking-[-.055em] sm:text-7xl">
-            We believe technology
-            <br />
-            should feel <span className="text-[#6e473b]">simple.</span>
-          </h1>
-          <p className="mt-8 max-w-2xl text-lg leading-8 text-[#6e473b]/75">
-            starOva Technologies is a digital technology studio focused on
-            thoughtful websites, applications, data experiences and practical
-            business solutions.
-          </p>
-        </div>
-      </section>
+    <>
+      <PageHeader
+        eyebrow="About StarOva"
+        title="We build digital experiences"
+        accent="that matter."
+      >
+        StarOva Technologies is a digital studio focused on thoughtful
+        websites, brands, data experiences and practical business solutions.
+      </PageHeader>
 
-      <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
-        <div className="grid gap-14 lg:grid-cols-[.6fr_1.4fr]">
-          <p className="text-xs font-bold uppercase tracking-[.2em] text-[#6e473b]">Our story</p>
+      {/* Story */}
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+        <div className="grid gap-12 lg:grid-cols-[0.6fr_1.4fr]">
+          <Eyebrow>Our story</Eyebrow>
           <div>
-            <h2 className="text-4xl font-medium leading-tight tracking-[-.045em] sm:text-5xl">
-              Design, technology and data do better work when they are considered together.
+            <h2 className="text-3xl font-semibold leading-tight tracking-tight text-espresso sm:text-4xl">
+              Businesses shouldn&apos;t have to choose between technology that
+              looks good and technology that{" "}
+              <span className="text-cocoa">actually works.</span>
             </h2>
-            <div className="mt-8 grid gap-6 text-sm leading-7 text-[#6e473b]/75 sm:grid-cols-2">
-              <p>We started with a simple idea: businesses should not need to choose between a beautiful digital presence and technology that genuinely works.</p>
-              <p>Our work brings those disciplines together in a focused, flexible process — keeping the experience useful for the people who use it and practical for the people who run it.</p>
+            <div className="mt-8 grid gap-6 leading-7 text-cocoa/80 sm:grid-cols-2">
+              <p>
+                A website should communicate clearly. A brand should be
+                recognisable. Data shouldn&apos;t sit inside confusing
+                spreadsheets without telling you anything useful.
+              </p>
+              <p>
+                That&apos;s where StarOva comes in. We bring design,
+                development, branding and data together to create solutions
+                around the real needs of a business.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#291c0e] text-[#e1d4c2]">
-        <div className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
-          <p className="text-xs font-bold uppercase tracking-[.2em] text-[#a78d78]">What matters to us</p>
-          <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-[#e1d4c2]/15 bg-[#e1d4c2]/10 sm:grid-cols-2">
-            {values.map(([num, title, text, Icon]) => (
-              <div key={title} className="bg-[#291c0e] p-8 sm:p-10">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-[#a78d78]">{num}</span>
-                  <Icon size={20} className="text-[#a78d78]" strokeWidth={1.5} />
-                </div>
-                <h3 className="mt-16 text-2xl font-semibold">{title}</h3>
-                <p className="mt-3 max-w-md text-sm leading-7 text-[#e1d4c2]/60">{text}</p>
-              </div>
+      {/* Values */}
+      <section className="bg-espresso text-cream">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+          <Eyebrow dark>What matters to us</Eyebrow>
+          <h2 className="mt-5 max-w-xl text-4xl font-semibold tracking-tight sm:text-5xl">
+            Built around <span className="text-taupe">better work.</span>
+          </h2>
+          <ul className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-cream/15 bg-cream/10 sm:grid-cols-2 lg:grid-cols-4">
+            {values.map(([title, text, Icon]) => (
+              <li key={title} className="bg-espresso p-7 sm:p-8">
+                <Icon className="size-6 text-taupe" strokeWidth={1.5} aria-hidden />
+                <h3 className="mt-12 text-xl font-semibold">{title}</h3>
+                <p className="mt-3 text-sm leading-7 text-cream/60">{text}</p>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
-        <div className="rounded-[2rem] border border-[#6e473b]/20 bg-[#beb5a9]/20 p-8 sm:p-12">
-          <p className="text-xs font-bold uppercase tracking-[.2em] text-[#6e473b]">Work with us</p>
-          <div className="mt-5 flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <h2 className="max-w-3xl text-4xl font-medium tracking-[-.05em] sm:text-5xl">
-              Have a digital problem worth solving?
+      {/* Approach */}
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+        <div className="grid gap-14 lg:grid-cols-2">
+          <div>
+            <Eyebrow>Our approach</Eyebrow>
+            <h2 className="mt-5 text-4xl font-semibold tracking-tight text-espresso sm:text-5xl">
+              From idea <span className="text-cocoa">to impact.</span>
             </h2>
-            <Link href="/contact" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold underline decoration-[#6e473b]/30 underline-offset-8">
-              Start a conversation <ArrowUpRight size={16} />
-            </Link>
+            <p className="mt-6 max-w-md leading-7 text-cocoa/80">
+              We don&apos;t just ask how something should look. We ask why it
+              exists, who it&apos;s for and what it should achieve.
+            </p>
           </div>
+          <ol className="space-y-6">
+            {process.map(([num, title, text]) => (
+              <li key={num} className="flex gap-5 border-t border-stone/50 pt-6">
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-cream text-xs font-semibold text-cocoa">
+                  {num}
+                </span>
+                <div>
+                  <h3 className="text-lg font-semibold text-espresso">{title}</h3>
+                  <p className="mt-1 text-sm leading-7 text-cocoa/75">{text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
-    </div>
+
+      {/* Difference */}
+      <section className="border-y border-stone/40 bg-cream/40">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+          <Eyebrow>Why StarOva Technologies</Eyebrow>
+          <h2 className="mt-5 max-w-2xl text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
+            More than just <span className="text-cocoa">another digital agency.</span>
+          </h2>
+          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {differences.map((item, i) => (
+              <li
+                key={item}
+                className="rounded-2xl border border-stone/60 bg-white p-6"
+              >
+                <span className="text-xs font-semibold text-taupe">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className="mt-6 font-semibold text-espresso">{item}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <CallToAction
+        eyebrow="Let's build something"
+        title="Your next digital chapter starts here."
+        text="Whether you need a website, a stronger brand or better insights from your data, let's talk about what you want to build."
+      />
+    </>
   );
 }
