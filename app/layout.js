@@ -3,6 +3,7 @@ import Navbar from "@/components/NavbarGlass";
 import Footer from "@/components/Footer";
 import Mascot from "@/components/Mascot";
 import ScrollReset from "@/components/ScrollReset";
+import { DialogsProvider } from "@/components/Dialogs";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -29,12 +30,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${poppins.variable} ${doto.variable}`}>
-      <body className="font-sans">
-        <ScrollReset />
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <Mascot />
+      <body id="top" className="font-sans">
+        <DialogsProvider>
+          <ScrollReset />
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <Mascot />
+        </DialogsProvider>
       </body>
     </html>
   );

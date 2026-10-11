@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { House, Layers, Users, Send, Menu, X } from "lucide-react";
+import { useOpenDialog } from "@/components/Dialogs";
 
 const links = [
   { href: "/", label: "Home", icon: House },
@@ -18,7 +19,7 @@ const glass =
 export default function NavbarGlass() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const contactActive = pathname === "/contact";
+  const openDialog = useOpenDialog();
 
   return (
     <header className="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
@@ -59,14 +60,15 @@ export default function NavbarGlass() {
             })}
           </ul>
 
-          <Link
-            href="/contact"
-            aria-current={contactActive ? "page" : undefined}
+          <button
+            type="button"
+            onClick={() => openDialog("connect")}
+            aria-haspopup="dialog"
             className="hidden items-center gap-2 rounded-full bg-espresso px-5 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-cocoa md:flex"
           >
-            Contact
+            Connect with us
             <Send className="size-4" strokeWidth={1.75} aria-hidden />
-          </Link>
+          </button>
 
           <button
             type="button"
@@ -85,28 +87,40 @@ export default function NavbarGlass() {
 
         {open && (
           <ul className={`mt-2 space-y-1 rounded-3xl p-2 md:hidden ${glass}`}>
-            {[...links, { href: "/contact", label: "Contact", icon: Send }].map(
-              ({ href, label, icon: Icon }) => {
-                const active = pathname === href;
-                return (
-                  <li key={href}>
-                    <Link
-                      href={href}
-                      onClick={() => setOpen(false)}
-                      aria-current={active ? "page" : undefined}
-                      className={`flex items-center gap-3 rounded-2xl px-4 py-3 font-medium ${
-                        active
-                          ? "bg-cocoa text-cream"
-                          : "text-espresso hover:bg-cream/60"
-                      }`}
-                    >
-                      <Icon className="size-5" strokeWidth={1.75} aria-hidden />
-                      {label}
-                    </Link>
-                  </li>
-                );
-              }
-            )}
+            {links.map(({ href, label, icon: Icon }) => {
+              const active = pathname === href;
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    onClick={() => setOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                    className={`flex items-center gap-3 rounded-2xl px-4 py-3 font-medium ${
+                      active
+                        ? "bg-cocoa text-cream"
+                        : "text-espresso hover:bg-cream/60"
+                    }`}
+                  >
+                    <Icon className="size-5" strokeWidth={1.75} aria-hidden />
+                    {label}
+                  </Link>
+                </li>
+              );
+            })}
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  openDialog("connect");
+                }}
+                aria-haspopup="dialog"
+                className="flex w-full items-center gap-3 rounded-2xl bg-espresso px-4 py-3 font-medium text-cream hover:bg-cocoa"
+              >
+                <Send className="size-5" strokeWidth={1.75} aria-hidden />
+                Connect with us
+              </button>
+            </li>
           </ul>
         )}
       </nav>

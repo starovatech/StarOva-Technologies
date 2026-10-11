@@ -2,11 +2,28 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { ArrowUpRight, MessageCircle, PenTool } from "lucide-react";
 import Eyebrow from "@/components/Eyebrow";
+import { DialogButton } from "@/components/Dialogs";
 import { services } from "@/lib/site";
 
-// Grid placement per service (3-column bento on desktop)
+// Services left out of this homepage section (still listed on /services)
+const hidden = ["Data Cleaning", "Logo & Brand Identity"];
+
+// Tiles shown differently here than on /services
+const overrides = {
+  "Catalogue Design": {
+    title: "Catalogue & Logo Design",
+    text: "Professional catalogues and memorable logos, digital and print-ready, that give your business a clear and recognisable presence.",
+    icon: PenTool,
+  },
+};
+
+const featured = services
+  .filter(({ title }) => !hidden.includes(title))
+  .map((service) => ({ ...service, ...overrides[service.title] }));
+
+// Grid placement per tile, in order (3-column bento on desktop)
 const layout = [
   { span: "md:col-span-2", dark: true },
   { span: "" },
@@ -115,7 +132,7 @@ export default function WhatWeDo() {
   return (
     <section
       ref={ref}
-      className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20"
+      className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-14"
     >
       <Reveal shown={shown} index={0}>
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
@@ -143,16 +160,16 @@ export default function WhatWeDo() {
       </Reveal>
 
       <div className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((service, i) => (
-          <Reveal key={service.title} shown={shown} index={i + 1} className={layout[i].span}>
-            <ServiceTile index={i} dark={layout[i].dark} {...service} />
+        {featured.map((service, i) => (
+          <Reveal key={service.title} shown={shown} index={i + 1} className={layout[i]?.span}>
+            <ServiceTile index={i} dark={layout[i]?.dark} {...service} />
           </Reveal>
         ))}
 
-        <Reveal shown={shown} index={services.length + 1}>
-          <Link
-            href="/contact"
-            className="group relative flex h-full min-h-[150px] flex-col justify-between overflow-hidden rounded-3xl bg-cocoa p-5 text-cream shadow-[0_30px_60px_-30px_rgba(110,71,59,0.9)] transition-transform duration-300 hover:-translate-y-1"
+        <Reveal shown={shown} index={featured.length + 1}>
+          <DialogButton
+            dialog="connect"
+            className="group relative flex h-full min-h-[150px] w-full flex-col justify-between overflow-hidden rounded-3xl bg-cocoa p-5 text-left text-cream shadow-[0_30px_60px_-30px_rgba(110,71,59,0.9)] transition-transform duration-300 hover:-translate-y-1"
           >
             <div
               aria-hidden
@@ -171,7 +188,7 @@ export default function WhatWeDo() {
                 />
               </p>
             </div>
-          </Link>
+          </DialogButton>
         </Reveal>
       </div>
     </section>

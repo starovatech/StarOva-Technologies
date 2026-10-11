@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Eyebrow from "@/components/Eyebrow";
+import { DialogButton } from "@/components/Dialogs";
 import { projects } from "@/lib/site";
 
 const frame =
@@ -89,12 +89,12 @@ function ProjectCard({ title, category, text, tags, tint, image, imageHref, url 
             View project
           </a>
         ) : (
-          <Link
-            href="/contact"
-            className="block rounded-full bg-white py-3 text-center text-sm font-semibold text-espresso transition-colors hover:bg-cream"
+          <DialogButton
+            dialog="enquiry"
+            className="block w-full rounded-full bg-white py-3 text-center text-sm font-semibold text-espresso transition-colors hover:bg-cream"
           >
             Build something similar
-          </Link>
+          </DialogButton>
         )}
       </div>
     </article>
@@ -104,7 +104,7 @@ function ProjectCard({ title, category, text, tags, tint, image, imageHref, url 
 export default function ProjectsSection() {
   return (
     <section>
-      <div className="mx-auto max-w-6xl px-4 pb-16 pt-12 sm:px-6 lg:pb-20 lg:pt-16">
+      <div className="mx-auto max-w-6xl px-4 pb-12 pt-12 sm:px-6 lg:pb-14 lg:pt-16">
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>Selected work</Eyebrow>
           <h2 className="mt-5 text-4xl font-semibold tracking-tight text-espresso sm:text-5xl">

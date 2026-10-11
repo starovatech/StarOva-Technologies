@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import Eyebrow from "@/components/Eyebrow";
 import CallToAction from "@/components/CallToAction";
+import { DialogButton } from "@/components/Dialogs";
 import { services, process } from "@/lib/site";
 
 export const metadata = {
@@ -23,7 +23,7 @@ export default function ServicesPage() {
         create digital solutions around the real needs of your business.
       </PageHeader>
 
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-14">
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map(({ title, text, icon: Icon }, i) => (
             <li
@@ -40,27 +40,28 @@ export default function ServicesPage() {
               </div>
               <h2 className="mt-8 text-xl font-semibold text-espresso">{title}</h2>
               <p className="mt-3 flex-1 text-sm leading-7 text-cocoa/75">{text}</p>
-              <Link
-                href="/contact"
+              <DialogButton
+                dialog="enquiry"
+                service={title}
                 className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-cocoa after:absolute after:inset-0 after:rounded-3xl hover:text-espresso"
               >
                 Enquire
                 <ArrowUpRight className="size-4" aria-hidden />
-              </Link>
+              </DialogButton>
             </li>
           ))}
         </ul>
       </section>
 
       <section className="border-y border-stone/40 bg-cream/40">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-14">
           <div className="max-w-2xl">
             <Eyebrow>How we work</Eyebrow>
             <h2 className="mt-5 text-4xl font-semibold tracking-tight text-espresso sm:text-5xl">
               From first idea <span className="text-cocoa">to final launch.</span>
             </h2>
           </div>
-          <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {process.map(([num, title, text]) => (
               <li key={num} className="border-t-2 border-cocoa pt-6">
                 <span className="text-xs font-semibold text-taupe">{num}</span>

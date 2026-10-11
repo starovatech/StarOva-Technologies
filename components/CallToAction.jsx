@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { DialogButton } from "@/components/Dialogs";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { contact } from "@/lib/site";
 
@@ -8,7 +8,7 @@ export default function CallToAction({
   text = "Tell us what you're building, where you're stuck, or simply what you want to improve. We'll help you figure out the next step.",
 }) {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+    <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-14">
       <div className="relative overflow-hidden rounded-[2rem] bg-espresso px-6 py-14 text-cream sm:px-12 sm:py-16">
         <div
           aria-hidden
@@ -33,8 +33,8 @@ export default function CallToAction({
           <p className="mt-5 max-w-xl leading-7 text-cream/70">{text}</p>
 
           <div className="mt-9 flex flex-wrap gap-3">
-            <Link
-              href="/contact"
+            <DialogButton
+              dialog="enquiry"
               className="group inline-flex items-center gap-2 rounded-full bg-cream px-6 py-3.5 text-sm font-semibold text-espresso transition-colors hover:bg-white"
             >
               Start a project
@@ -43,7 +43,7 @@ export default function CallToAction({
                 strokeWidth={2}
                 aria-hidden
               />
-            </Link>
+            </DialogButton>
             <a
               href={contact.whatsapp}
               target="_blank"

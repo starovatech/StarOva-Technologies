@@ -37,7 +37,7 @@ export default function AboutPage() {
       </PageHeader>
 
       {/* Story */}
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-14">
         <div className="grid gap-12 lg:grid-cols-[0.6fr_1.4fr]">
           <Eyebrow>Our story</Eyebrow>
           <div>
@@ -64,7 +64,7 @@ export default function AboutPage() {
 
       {/* Values */}
       <section className="bg-espresso text-cream">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-14">
           <Eyebrow dark>What matters to us</Eyebrow>
           <h2 className="mt-5 max-w-xl text-4xl font-semibold tracking-tight sm:text-5xl">
             Built around <span className="text-taupe">better work.</span>
@@ -82,7 +82,7 @@ export default function AboutPage() {
       </section>
 
       {/* Approach */}
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-14">
         <div className="grid gap-14 lg:grid-cols-2">
           <div>
             <Eyebrow>Our approach</Eyebrow>
@@ -112,7 +112,7 @@ export default function AboutPage() {
 
       {/* Difference */}
       <section className="border-y border-stone/40 bg-cream/40">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-14">
           <Eyebrow>Why StarOva Technologies</Eyebrow>
           <h2 className="mt-5 max-w-2xl text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
             More than just <span className="text-cocoa">another digital agency.</span>

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const H = 96;
-const W = Math.round((H * 202) / 320); // keeps the image's aspect ratio
+const W = Math.round((H * 396) / 624); // keeps the image's aspect ratio
 const PAD = 20; // clear space kept around the mascot
 const STEP = 80; // grid spacing when searching for empty spots
 const EDGE = 8; // distance kept from the viewport edges
@@ -13,6 +13,8 @@ const LOOK = 28; // how far ahead it checks while travelling
 const CHECK_MS = 140; // how often it checks the path ahead
 const SPEED = { down: 45, left: 60 }; // travel speed, px per second
 const FOLLOW_MS = 5000;
+const SIDE_HOP_MS = 6000; // pop over to the other side of the screen this often
+const SWAY = 20; // px it weaves to either side of its path (kept within PAD)
 
 // Anything the mascot should never sit on top of
 const SOLID =
@@ -79,6 +81,17 @@ function isClear(test, p) {
   return true;
 }
 
+// Spot right beside the footer banner's big mascot (marked with data-mascot-home)
+function homeSpot() {
+  const el = document.querySelector("[data-mascot-home]");
+  const r = el?.getBoundingClientRect();
+  if (!r || !r.width) return null; // not rendered or hidden at this screen size
+  return {
+    x: clamp(r.right + 6, EDGE, viewW() - W - EDGE),
+    y: clamp(r.bottom - H - 6, EDGE, window.innerHeight - H - EDGE),
+  };
+}
+
 export default function Mascot() {
   const pathname = usePathname();
   const [enabled, setEnabled] = useState(false);
@@ -99,6 +112,8 @@ export default function Mascot() {
     visible: false,
     reduced: false,
     nextWrap: 0,
+    home: false, // sitting next to the footer mascot
+    hovered: false,
   });
 
   // Only on tablet/desktop widths, where there is room to roam
@@ -191,7 +206,7 @@ export default function Mascot() {
   // Look ahead on the current path: keep going, jump past a section, turn, or wrap around
   const checkPath = useCallback(() => {
     const s = st.current;
-    if (s.busy || s.mode !== "idle") return;
+    if (s.busy || s.mode !== "idle" || s.home) return;
     if (!s.visible) {
       // Nowhere to be right now: look for space again at most once a second
       if (performance.now() < s.nextWrap) return;
@@ -229,6 +244,9 @@ export default function Mascot() {
     let raf;
     let prev = performance.now();
     let lastCheck = 0;
+    let prevSway = 0;
+    let pauseUntil = 0;
+    let nextPause = prev + 4000;
     const t0 = prev;
     const tick = (t) => {
       const s = st.current;
@@ -239,8 +257,11 @@ export default function Mascot() {
         if (t > s.followUntil) {
           s.mode = "idle";
           setFollowing(false);
-          const spots = findSpots();
-          if (spots.length) {
+          const home = s.home && homeSpot();
+          const spots = home ? [] : findSpots();
+          if (home) {
+            teleport(home);
+          } else if (spots.length) {
             teleport(spots.reduce((a, b) => (dist(b, s.pos) < dist(a, s.pos) ? b : a)));
           } else {
             hide();
@@ -251,10 +272,26 @@ export default function Mascot() {
             y: clamp(s.mouse.y + 12, EDGE, window.innerHeight - H - EDGE),
           };
         }
+      } else if (s.home) {
+        // Stay beside the footer mascot as the page scrolls
+        const home = homeSpot();
+        if (home && !s.busy) {
+          if (s.visible) s.target = home;
+          else teleport(home);
+        }
       } else if (s.visible && !s.busy && !s.reduced) {
-        const v = DIRS[s.dir];
-        s.target.x += v.x * SPEED[s.dir] * dt;
-        s.target.y += v.y * SPEED[s.dir] * dt;
+        // Every few seconds, stop and hover for a moment
+        if (t > nextPause) {
+          pauseUntil = t + 900 + Math.random() * 1300;
+          nextPause = pauseUntil + 3500 + Math.random() * 5000;
+        }
+        if (t > pauseUntil) {
+          // Uneven pace: drifts between half and full speed
+          const pace = 0.5 + 0.5 * (0.5 + 0.5 * Math.sin((t - t0) / 1300));
+          const v = DIRS[s.dir];
+          s.target.x += v.x * SPEED[s.dir] * pace * dt;
+          s.target.y += v.y * SPEED[s.dir] * pace * dt;
+        }
       }
 
       if (s.mode === "idle" && t - lastCheck > CHECK_MS) {
@@ -268,11 +305,31 @@ export default function Mascot() {
       s.pos.x += dx * k;
       s.pos.y += dy * k;
       s.drift *= 0.9;
-      const bob = s.reduced ? 0 : Math.sin((t - t0) / 650) * 6;
-      const lean = s.mode === "idle" && s.dir === "left" ? -6 : 0;
-      const tilt = clamp(dx * 0.06 - s.drift * 0.2 + lean, -14, 14);
+      const age = t - t0;
+      const bob = s.reduced ? 0 : Math.sin(age / 650) * 6;
+
+      // Weave side to side across the path (two mixed waves so it never looks mechanical)
+      const patrolling = s.mode === "idle" && !s.home && !s.reduced;
+      const swayAmp = s.reduced ? 0 : patrolling ? SWAY : 5;
+      const sway = swayAmp * (0.7 * Math.sin(age / 900) + 0.3 * Math.sin(age / 2300 + 1));
+      const swayVel = dt ? (sway - prevSway) / dt : 0;
+      prevSway = sway;
+      const across = s.mode === "idle" && s.dir === "left" ? { x: 0, y: 0.8 } : { x: 1, y: 0 };
+
+      // Lean into the weave; glance around while hovering in place
+      const hovering = patrolling && t < pauseUntil;
+      const look = hovering ? Math.sin(age / 220) * 7 : 0;
+      const lean = s.mode !== "idle" ? 0 : s.home ? -8 : s.dir === "left" ? -6 : 0;
+      const tilt = clamp(dx * 0.06 - s.drift * 0.2 + lean + swayVel * across.x * 0.25 + look, -16, 16);
+
+      // Gentle squash and stretch in time with the float
+      const squash = s.reduced ? 0 : Math.cos(age / 650) * 0.035;
+
       if (wrapRef.current) {
-        wrapRef.current.style.transform = `translate3d(${s.pos.x}px, ${s.pos.y + bob + s.drift}px, 0) rotate(${tilt}deg)`;
+        // Keep the weave on screen
+        const x = clamp(s.pos.x + sway * across.x, 4, viewW() - W - 4);
+        const y = clamp(s.pos.y + bob + s.drift + sway * across.y, 4, window.innerHeight - H - 4);
+        wrapRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${tilt}deg) scale(${1 - squash}, ${1 + squash})`;
       }
       raf = requestAnimationFrame(tick);
     };
@@ -288,7 +345,7 @@ export default function Mascot() {
       const s = st.current;
       const delta = window.scrollY - lastY;
       lastY = window.scrollY;
-      if (s.mode !== "follow") s.drift = clamp(s.drift - delta * 0.3, -40, 40);
+      if (s.mode !== "follow" && !s.home) s.drift = clamp(s.drift - delta * 0.3, -40, 40);
     };
     const onMove = (e) => {
       st.current.mouse = { x: e.clientX, y: e.clientY };
@@ -306,6 +363,46 @@ export default function Mascot() {
       window.removeEventListener("resize", onResize);
     };
   }, [enabled, wrap]);
+
+  // Every few seconds, vanish and pop up on the opposite side of the screen at about the same height
+  useEffect(() => {
+    if (!enabled) return;
+    const id = setInterval(() => {
+      const s = st.current;
+      if (s.mode !== "idle" || s.home || s.busy || !s.visible || s.hovered || s.reduced || document.hidden) return;
+      const mid = viewW() / 2;
+      const onRight = s.pos.x + W / 2 > mid;
+      const other = findSpots().filter((p) => (onRight ? p.x + W / 2 < mid : p.x + W / 2 > mid));
+      if (!other.length) return;
+      const spot = other.reduce((a, b) => (Math.abs(b.y - s.pos.y) < Math.abs(a.y - s.pos.y) ? b : a));
+      s.dir = "down";
+      teleport(spot);
+    }, SIDE_HOP_MS);
+    return () => clearInterval(id);
+  }, [enabled, findSpots, teleport]);
+
+  // When the footer banner comes into view, fly over to sit beside its mascot
+  useEffect(() => {
+    if (!enabled || !("IntersectionObserver" in window)) return;
+    const el = document.querySelector("[data-mascot-home]");
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const s = st.current;
+        if (entry.intersectionRatio >= 0.6 && !s.home) {
+          s.home = true;
+          const home = homeSpot();
+          if (s.mode === "idle" && home) teleport(home);
+        } else if (entry.intersectionRatio < 0.6 && s.home) {
+          s.home = false;
+          if (s.mode === "idle") wrap();
+        }
+      },
+      { threshold: [0, 0.6] }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [enabled, pathname, teleport, wrap]);
 
   // New page: start a fresh lap once it has rendered
   useEffect(() => {
@@ -365,6 +462,8 @@ export default function Mascot() {
           ref={btnRef}
           type="button"
           onClick={startFollow}
+          onMouseEnter={() => (st.current.hovered = true)}
+          onMouseLeave={() => (st.current.hovered = false)}
           aria-label="StarOva mascot. Click and it follows your cursor for 5 seconds"
           title={following ? "Following you!" : "Click me!"}
           className={`block size-full cursor-pointer ${
@@ -377,13 +476,13 @@ export default function Mascot() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/mascot/starling.webp"
+            src="/images/mascot/starling-warm.webp"
             alt=""
             draggable={false}
             className={`size-full select-none transition-[filter] duration-300 ${
               following
-                ? "drop-shadow-[0_0_18px_rgba(110,140,255,0.95)]"
-                : "drop-shadow-[0_0_10px_rgba(110,140,255,0.55)]"
+                ? "drop-shadow-[0_0_18px_rgba(225,212,194,0.95)]"
+                : "drop-shadow-[0_0_10px_rgba(167,141,120,0.6)]"
             }`}
           />
         </button>

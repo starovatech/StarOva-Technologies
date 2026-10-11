@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Mail, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import { contact } from "@/lib/site";
 import HeroStats from "@/components/HeroStats";
+import { DialogButton } from "@/components/Dialogs";
 
 const IMAGE = "url('/images/hero/blackhole.jpg')";
 const SLIDE_MS = 3000;
@@ -84,12 +84,12 @@ export default function GalaxyHero() {
         {/* Panel content */}
         <div className="relative flex h-full flex-col justify-between p-6 sm:p-8 md:w-[40%] md:p-10">
           <div>
-            <Link
-              href="/contact"
+            <DialogButton
+              dialog="connect"
               className="text-sm font-medium text-white hover:underline md:text-stone"
             >
               Contact us
-            </Link>
+            </DialogButton>
             <div className="mt-3 flex gap-2">
               <a
                 href={`mailto:${contact.email}`}
@@ -126,12 +126,12 @@ export default function GalaxyHero() {
               <p className="mt-3 max-w-sm text-sm leading-6 text-white/90">
                 {slide.text}
               </p>
-              <Link
-                href="/contact"
+              <DialogButton
+                dialog="enquiry"
                 className="mt-7 inline-flex rounded-full border border-white/80 bg-white/10 px-7 py-2.5 text-sm font-medium text-white backdrop-blur transition-colors hover:bg-white hover:text-espresso"
               >
                 Start a project
-              </Link>
+              </DialogButton>
             </div>
 
             {/* Slide controls */}
