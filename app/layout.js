@@ -4,6 +4,9 @@ import Footer from "@/components/Footer";
 import Mascot from "@/components/Mascot";
 import ScrollReset from "@/components/ScrollReset";
 import { DialogsProvider } from "@/components/Dialogs";
+import JsonLd from "@/components/JsonLd";
+import { site, founders } from "@/lib/site";
+import { organizationLd, websiteLd } from "@/lib/seo";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -19,22 +22,60 @@ const doto = Doto({
 });
 
 export const metadata = {
+  metadataBase: new URL(site.url),
   title: {
-    default: "StarOva Technologies | Web, Design & Data",
-    template: "%s | StarOva Technologies",
+    default: `${site.name} | ${site.tagline}`,
+    template: `%s | ${site.name}`,
   },
-  description:
-    "StarOva Technologies builds modern websites, brand identities, data analysis and interactive dashboards for growing businesses.",
+  description: site.description,
+  applicationName: site.name,
+  keywords: [
+    "website development",
+    "web design",
+    "Next.js developer",
+    "logo design",
+    "catalogue design",
+    "data analysis",
+    "Power BI dashboards",
+    "business intelligence",
+    "Microsoft Fabric",
+    "CRM solutions",
+    "digital studio India",
+  ],
+  authors: founders.map((f) => ({ name: f.name, url: `/about#${f.name.toLowerCase()}` })),
+  creator: site.name,
+  publisher: site.name,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    locale: site.locale,
+    url: "/",
+    title: `${site.name} | ${site.tagline}`,
+    description: site.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} | ${site.tagline}`,
+    description: site.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
+  category: "technology",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${poppins.variable} ${doto.variable}`}>
       <body id="top" className="font-sans">
+        <JsonLd data={[organizationLd(), websiteLd()]} />
         <DialogsProvider>
           <ScrollReset />
           <Navbar />
-          <main>{children}</main>
+          <main className="overflow-x-clip">{children}</main>
           <Footer />
           <Mascot />
         </DialogsProvider>

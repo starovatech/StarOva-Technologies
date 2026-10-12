@@ -34,7 +34,7 @@ export default function NavbarGlass() {
               width={800}
               height={290}
               priority
-              className="h-14 w-auto"
+              className="h-11 w-auto sm:h-14"
             />
           </Link>
 

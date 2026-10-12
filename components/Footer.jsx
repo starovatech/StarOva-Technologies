@@ -42,11 +42,11 @@ function Banner() {
         <div aria-hidden className="relative hidden md:block">
           <div data-mascot-home className="absolute bottom-[-1rem] left-0 flex items-end">
             <Image
-              src="/images/mascot/starling-warm.webp"
+              src="/images/mascot/starling-warm.png"
               alt=""
-              width={396}
-              height={624}
-              className="h-[15rem] w-auto animate-[footerFloat_5s_ease-in-out_infinite] drop-shadow-[0_0_24px_rgba(167,141,120,0.6)] motion-reduce:animate-none lg:h-[16rem]"
+              width={387}
+              height={615}
+              className="h-[15rem] w-auto animate-[footerFloat_5s_ease-in-out_infinite] motion-reduce:animate-none lg:h-[16rem]"
             />
           </div>
           <Sparkles className="absolute -top-10 left-48 size-7 text-cream lg:left-56" strokeWidth={1.5} />

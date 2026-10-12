@@ -3,8 +3,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
-const H = 96;
-const W = Math.round((H * 396) / 624); // keeps the image's aspect ratio
+// Size: full on tablet/desktop, smaller on phones. Set by setSize() when the screen size changes.
+let H = 96;
+let W = Math.round((H * 387) / 615); // keeps the image's aspect ratio
+function setSize(compact) {
+  H = compact ? 64 : 96;
+  W = Math.round((H * 387) / 615);
+}
 const PAD = 20; // clear space kept around the mascot
 const STEP = 80; // grid spacing when searching for empty spots
 const EDGE = 8; // distance kept from the viewport edges
@@ -81,6 +86,12 @@ function isClear(test, p) {
   return true;
 }
 
+// Phones: no room to roam, so it sits in a bottom corner and hops between the two
+const dockSpot = (side) => ({
+  x: side === "left" ? 12 : viewW() - W - 12,
+  y: window.innerHeight - H - 20,
+});
+
 // Spot right beside the footer banner's big mascot (marked with data-mascot-home)
 function homeSpot() {
   const el = document.querySelector("[data-mascot-home]");
@@ -95,6 +106,7 @@ function homeSpot() {
 export default function Mascot() {
   const pathname = usePathname();
   const [enabled, setEnabled] = useState(false);
+  const [compact, setCompact] = useState(false);
   const [phase, setPhase] = useState("hidden"); // hidden | in | out
   const [following, setFollowing] = useState(false);
   const [effects, setEffects] = useState([]);
@@ -114,12 +126,20 @@ export default function Mascot() {
     nextWrap: 0,
     home: false, // sitting next to the footer mascot
     hovered: false,
+    compact: false, // phone layout: docked in a bottom corner
+    side: "right",
   });
 
-  // Only on tablet/desktop widths, where there is room to roam
+  // Roams on tablet/desktop; on phones it docks in a bottom corner instead
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
-    const update = () => setEnabled(mq.matches);
+    const update = () => {
+      const isCompact = !mq.matches;
+      setSize(isCompact);
+      st.current.compact = isCompact;
+      setCompact(isCompact);
+      setEnabled(true);
+    };
     update();
     st.current.reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     mq.addEventListener("change", update);
@@ -196,6 +216,7 @@ export default function Mascot() {
   // Start a new lap from the top-right-most empty spot, heading down
   const wrap = useCallback(() => {
     const s = st.current;
+    if (s.compact) return teleport(dockSpot(s.side));
     const spots = findSpots();
     if (!spots.length) return hide();
     const start = spots.reduce((a, b) => (b.x - b.y * 0.5 > a.x - a.y * 0.5 ? b : a));
@@ -207,6 +228,10 @@ export default function Mascot() {
   const checkPath = useCallback(() => {
     const s = st.current;
     if (s.busy || s.mode !== "idle" || s.home) return;
+    if (s.compact) {
+      if (!s.visible) wrap();
+      return;
+    }
     if (!s.visible) {
       // Nowhere to be right now: look for space again at most once a second
       if (performance.now() < s.nextWrap) return;
@@ -257,7 +282,7 @@ export default function Mascot() {
         if (t > s.followUntil) {
           s.mode = "idle";
           setFollowing(false);
-          const home = s.home && homeSpot();
+          const home = s.compact ? dockSpot(s.side) : s.home && homeSpot();
           const spots = home ? [] : findSpots();
           if (home) {
             teleport(home);
@@ -279,6 +304,9 @@ export default function Mascot() {
           if (s.visible) s.target = home;
           else teleport(home);
         }
+      } else if (s.compact) {
+        // Phones: stay docked (tracks the address bar showing/hiding)
+        if (s.visible && !s.busy) s.target = dockSpot(s.side);
       } else if (s.visible && !s.busy && !s.reduced) {
         // Every few seconds, stop and hover for a moment
         if (t > nextPause) {
@@ -310,7 +338,7 @@ export default function Mascot() {
 
       // Weave side to side across the path (two mixed waves so it never looks mechanical)
       const patrolling = s.mode === "idle" && !s.home && !s.reduced;
-      const swayAmp = s.reduced ? 0 : patrolling ? SWAY : 5;
+      const swayAmp = s.reduced ? 0 : patrolling && !s.compact ? SWAY : 5;
       const sway = swayAmp * (0.7 * Math.sin(age / 900) + 0.3 * Math.sin(age / 2300 + 1));
       const swayVel = dt ? (sway - prevSway) / dt : 0;
       prevSway = sway;
@@ -352,14 +380,17 @@ export default function Mascot() {
     };
     const onResize = () => {
       const s = st.current;
-      if (!inBounds(s.target)) wrap();
+      if (s.compact) s.target = dockSpot(s.side);
+      else if (!inBounds(s.target)) wrap();
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("pointerdown", onMove, { passive: true }); // touch: where the finger lands
     window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerdown", onMove);
       window.removeEventListener("resize", onResize);
     };
   }, [enabled, wrap]);
@@ -369,6 +400,12 @@ export default function Mascot() {
     if (!enabled) return;
     const id = setInterval(() => {
       const s = st.current;
+      if (s.compact) {
+        // Phones: hop between the bottom-right and bottom-left corners
+        if (s.mode !== "idle" || s.busy || !s.visible || s.reduced || document.hidden) return;
+        s.side = s.side === "right" ? "left" : "right";
+        return teleport(dockSpot(s.side));
+      }
       if (s.mode !== "idle" || s.home || s.busy || !s.visible || s.hovered || s.reduced || document.hidden) return;
       const mid = viewW() / 2;
       const onRight = s.pos.x + W / 2 > mid;
@@ -409,7 +446,7 @@ export default function Mascot() {
     if (!enabled) return;
     const t = setTimeout(wrap, 700);
     return () => clearTimeout(t);
-  }, [pathname, enabled, wrap]);
+  }, [pathname, enabled, compact, wrap]);
 
   const startFollow = () => {
     const s = st.current;
@@ -476,13 +513,13 @@ export default function Mascot() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/mascot/starling-warm.webp"
+            src="/images/mascot/starling-warm.png"
             alt=""
             draggable={false}
             className={`size-full select-none transition-[filter] duration-300 ${
               following
-                ? "drop-shadow-[0_0_18px_rgba(225,212,194,0.95)]"
-                : "drop-shadow-[0_0_10px_rgba(167,141,120,0.6)]"
+                ? "brightness-110"
+                : ""
             }`}
           />
         </button>

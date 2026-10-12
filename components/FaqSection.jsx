@@ -4,32 +4,9 @@ import { useId, useState } from "react";
 import { Plus, MessageCircle, ArrowUpRight } from "lucide-react";
 import Eyebrow from "@/components/Eyebrow";
 import { DialogButton } from "@/components/Dialogs";
-import { contact } from "@/lib/site";
+import { contact, homeFaqs as faqs } from "@/lib/site";
 
-const faqs = [
-  [
-    "What does StarOva build?",
-    "Business websites, landing pages, portfolios, web applications, brand identities, catalogues, data analysis and interactive dashboards.",
-  ],
-  [
-    "Can you redesign an existing website?",
-    "Yes. We can redesign the visual system, improve responsiveness, restructure pages and modernise the overall experience while keeping what already works.",
-  ],
-  [
-    "Can you build a dashboard from the data we already have?",
-    "Yes. We work with data in Excel, Google Sheets, databases or the tools you already use. We clean and organise it first, then build interactive dashboards, for example in Power BI, that bring your key numbers into one place and update as your data changes.",
-  ],
-  [
-    "How long does a project take?",
-    "It depends on the scope. A landing page is quicker than a full website or a dashboard built on several data sources. After our first conversation we agree a clear timeline with milestones, so you always know what happens and when.",
-  ],
-  [
-    "Can you maintain the website after launch?",
-    "Yes. We help with updates, content changes, performance improvements, bug fixes and new features.",
-  ],
-];
-
-function FaqItem({ index, question, answer, open, onToggle }) {
+export function FaqItem({ index, question, answer, open, onToggle }) {
   const id = useId();
   return (
     <li
