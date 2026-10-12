@@ -10,17 +10,17 @@ import {
   PackageCheck,
   ChevronRight,
 } from "lucide-react";
-import { process } from "@/lib/site";
+import { process as steps } from "@/lib/site";
 
 // How long each slide stays: the overview, then each step (longer, so the sentence can be read)
 const OVERVIEW_MS = 4000;
 const STEP_MS = 4500;
 
-// One icon per step in `process`, in order
+// One icon per step in `steps`, in order
 const icons = [ScanSearch, Database, Compass, Zap, ShieldCheck, PackageCheck];
 
 // Slide 0 is the full flow; slides 1..n show one step each
-const count = process.length + 1;
+const count = steps.length + 1;
 
 function Overview() {
   return (
@@ -30,7 +30,7 @@ function Overview() {
       </p>
       <span aria-hidden className="hidden h-5 w-px shrink-0 bg-white/20 lg:block" />
       <ol className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-3 xl:gap-x-3">
-      {process.map(([num, title], i) => {
+      {steps.map(([num, title], i) => {
         const Icon = icons[i];
         return (
           <li key={num} className="flex items-center gap-2.5 xl:gap-3">
@@ -38,7 +38,7 @@ function Overview() {
               <Icon className="size-[18px] text-taupe" strokeWidth={1.75} aria-hidden />
               {title}
             </span>
-            {i < process.length - 1 && (
+            {i < steps.length - 1 && (
               <ChevronRight className="size-4 text-white/40" strokeWidth={2} aria-hidden />
             )}
           </li>
@@ -50,7 +50,7 @@ function Overview() {
 }
 
 function Step({ index }) {
-  const [, title, text, short] = process[index];
+  const [, title, text, short] = steps[index];
   const Icon = icons[index];
   return (
     <div className="flex w-full items-center gap-3 sm:gap-4">
