@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="22 13 190 190" width="190" height="190">
+  <title>StarOva Technologies</title>
+  <defs>
+    <linearGradient id="star" gradientUnits="userSpaceOnUse" x1="25" y1="20" x2="195" y2="190">
+      <stop offset="0" stop-color="#FFEBCB"/>
+      <stop offset="0.28" stop-color="#EFB67A"/>
+      <stop offset="0.55" stop-color="#C9742E"/>
+      <stop offset="0.80" stop-color="#8B4719"/>
+      <stop offset="1" stop-color="#E6A56C"/>
+    </linearGradient>
+    <linearGradient id="ring" gradientUnits="userSpaceOnUse" x1="30" y1="20" x2="205" y2="200">
+      <stop offset="0" stop-color="#F2C28C"/>
+      <stop offset="0.5" stop-color="#C98A4C"/>
+      <stop offset="1" stop-color="#E8B176"/>
+    </linearGradient>
+    <radialGradient id="dot" cx="0.35" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#FFD9A0"/>
+      <stop offset="0.6" stop-color="#E88A2E"/>
+      <stop offset="1" stop-color="#B8561A"/>
+    </radialGradient>
+  </defs>
+  <circle cx="118.00" cy="108.00" r="89.76" fill="none" stroke="url(#ring)" stroke-width="1.8"/>
+  <circle cx="178.06" cy="41.30" r="4.6" fill="url(#dot)"/>
+  <path d="M110.00,26.00 L132.24,83.39 L193.69,86.81 L145.99,125.69 L161.73,185.19 L110.00,151.84 L58.27,185.19 L74.01,125.69 L26.31,86.81 L87.76,83.39 Z M115.87,65.03 L127.95,96.07 L160.37,103.72 L134.59,124.80 L137.33,158.00 L109.31,139.98 L78.59,152.86 L87.06,120.64 L65.33,95.40 L98.58,93.50 Z" fill="url(#star)" fill-rule="evenodd"/>
+  <path d="M87.76,83.39 L95.25,93.69 L98.58,93.50 L110.00,74.70 L110.00,26.00 Z" fill="#2a1005" fill-opacity="0.30"/>
+  <path d="M110.00,26.00 L110.00,74.70 L115.87,65.03 L126.23,91.65 L132.24,83.39 Z" fill="#fff4de" fill-opacity="0.28"/>
+  <path d="M132.24,83.39 L126.23,91.65 L127.95,96.07 L149.52,101.16 L193.69,86.81 Z" fill="#2a1005" fill-opacity="0.30"/>
+  <path d="M193.69,86.81 L149.52,101.16 L160.37,103.72 L137.05,122.79 L145.99,125.69 Z" fill="#fff4de" fill-opacity="0.28"/>
+  <path d="M145.99,125.69 L137.05,122.79 L134.59,124.80 L136.74,150.80 L161.73,185.19 Z" fill="#2a1005" fill-opacity="0.30"/>
+  <path d="M161.73,185.19 L136.74,150.80 L137.33,158.00 L110.00,140.43 L110.00,151.84 Z" fill="#fff4de" fill-opacity="0.28"/>
+  <path d="M110.00,151.84 L110.00,140.43 L109.31,139.98 L83.16,150.94 L58.27,185.19 Z" fill="#2a1005" fill-opacity="0.30"/>
+  <path d="M58.27,185.19 L83.16,150.94 L78.59,152.86 L86.83,121.53 L74.01,125.69 Z" fill="#fff4de" fill-opacity="0.28"/>
+  <path d="M74.01,125.69 L86.83,121.53 L87.06,120.64 L70.21,101.07 L26.31,86.81 Z" fill="#2a1005" fill-opacity="0.30"/>
+  <path d="M26.31,86.81 L70.21,101.07 L65.33,95.40 L95.25,93.69 L87.76,83.39 Z" fill="#fff4de" fill-opacity="0.28"/>
+  <path d="M115.87,65.03 L127.95,96.07 L160.37,103.72 L134.59,124.80 L137.33,158.00 L109.31,139.98 L78.59,152.86 L87.06,120.64 L65.33,95.40 L98.58,93.50 Z" fill="none" stroke="#FFE2B8" stroke-opacity="0.55" stroke-width="1.1" stroke-linejoin="round"/>
+  <path d="M110.00,26.00 L132.24,83.39 L193.69,86.81 L145.99,125.69 L161.73,185.19 L110.00,151.84 L58.27,185.19 L74.01,125.69 L26.31,86.81 L87.76,83.39 Z" fill="none" stroke="#6b3412" stroke-opacity="0.55" stroke-width="1.1" stroke-linejoin="round"/>
+</svg>

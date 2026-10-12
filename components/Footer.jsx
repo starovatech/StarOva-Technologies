@@ -29,7 +29,7 @@ const socials = [
 function Banner() {
   return (
     <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6">
-      <div className="relative grid overflow-visible rounded-3xl bg-gradient-to-br from-cocoa to-espresso px-6 py-7 text-cream shadow-[0_30px_70px_-30px_rgba(41,28,14,0.8)] sm:px-10 md:grid-cols-[0.85fr_1.15fr] md:py-8">
+      <div className="relative grid grid-cols-1 overflow-visible rounded-3xl bg-gradient-to-br from-cocoa to-espresso px-6 py-7 text-cream shadow-[0_30px_70px_-30px_rgba(41,28,14,0.8)] sm:px-10 md:grid-cols-[0.85fr_1.15fr] md:py-8">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl"

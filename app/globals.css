@@ -23,6 +23,8 @@
 @layer base {
   html {
     color-scheme: light;
+    /* Stop fixed/animated decorations (e.g. the mascot) from causing sideways scroll on phones */
+    overflow-x: clip;
   }
 
   body {

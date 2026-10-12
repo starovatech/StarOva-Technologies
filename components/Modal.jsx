@@ -18,7 +18,10 @@ export default function Modal({ open, onClose, labelledBy, className = "max-w-md
   return (
     <dialog
       ref={ref}
-      onClose={onClose}
+      // Only report closes the visitor made (e.g. Escape). When the parent closes this
+      // pop-up itself (like switching from Connect to Enquiry) `open` is already false,
+      // and calling onClose then would also shut the pop-up that just opened.
+      onClose={() => open && onClose()}
       // Clicks on the backdrop land on the <dialog> itself
       onClick={(e) => e.target === e.currentTarget && onClose()}
       aria-labelledby={labelledBy}

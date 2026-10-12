@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Lets phones on the same Wi-Fi load the dev server (npm run dev only)
+  allowedDevOrigins: ["192.168.0.102"],
   images: {
     unoptimized: true
   },

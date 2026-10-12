@@ -7,8 +7,16 @@ import Eyebrow from "@/components/Eyebrow";
 import { DialogButton } from "@/components/Dialogs";
 import { services } from "@/lib/site";
 
-// Services left out of this homepage section (still listed on /services)
-const hidden = ["Data Cleaning", "Logo & Brand Identity"];
+// Services shown in this homepage section, in order. Data Cleaning and
+// Logo & Brand Identity are left out here (still listed on /services)
+const order = [
+  "Website Development",
+  "Data Analysis",
+  "Interactive Dashboards",
+  "CRM Solutions",
+  "Catalogue Design",
+  "BI Development & Architecture",
+];
 
 // Tiles shown differently here than on /services
 const overrides = {
@@ -19,8 +27,8 @@ const overrides = {
   },
 };
 
-const featured = services
-  .filter(({ title }) => !hidden.includes(title))
+const featured = order
+  .map((title) => services.find((service) => service.title === title))
   .map((service) => ({ ...service, ...overrides[service.title] }));
 
 // Grid placement per tile, in order (3-column bento on desktop)
