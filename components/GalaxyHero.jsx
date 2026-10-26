@@ -77,7 +77,7 @@ export default function GalaxyHero() {
         <div className="absolute inset-x-0 bottom-0 h-[58%] border-t border-white/20 bg-cream/20 backdrop-blur-xl md:inset-y-0 md:left-0 md:h-auto md:w-[40%] md:border-r md:border-t-0" />
 
         {/* Big title: dark over the glass, light over the image */}
-        <h1 className="sr-only">StarOva Technologies</h1>
+        <h1 className="sr-only">StarOva Technologies: website design and Power BI dashboard development</h1>
         <Title className="hidden text-taupe md:block md:[clip-path:inset(0_60%_0_0)]" />
         <Title className="text-white md:[clip-path:inset(0_0_0_40%)]" />
 

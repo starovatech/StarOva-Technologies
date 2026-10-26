@@ -24,12 +24,18 @@ const doto = Doto({
 export const metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | ${site.tagline}`,
+    default: `${site.name} | Website Design & Power BI Dashboards`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
   applicationName: site.name,
   keywords: [
+    "website design for small business",
+    "website development services",
+    "website redesign",
+    "Power BI dashboard development",
+    "Power BI consultant",
+    "Excel to Power BI",
     "website development",
     "web design",
     "Next.js developer",

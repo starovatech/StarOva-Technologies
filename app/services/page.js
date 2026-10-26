@@ -27,10 +27,12 @@ import ServicesHero from "@/components/ServicesHero";
 import ServiceFaq from "@/components/ServiceFaq";
 import ApproachStrip from "@/components/ApproachStrip";
 import { DialogButton } from "@/components/Dialogs";
+import Link from "next/link";
 import ServiceNav from "@/components/ServiceNav";
 import ServiceTabs from "@/components/ServiceTabs";
 import JsonLd from "@/components/JsonLd";
 import { pageMetadata, serviceLd, faqLd, breadcrumbLd } from "@/lib/seo";
+import { landingPages } from "@/lib/landing";
 
 export const metadata = pageMetadata({
   title: "Services",
@@ -59,6 +61,7 @@ const categories = [
     text: "Fast, modern and responsive websites designed around your brand, built to turn visitors into customers.",
     enquire: "Website Development",
     cta: "Start a web project",
+    more: landingPages.web,
     showcase: [
       {
         title: "Syntrad",
@@ -103,6 +106,7 @@ const categories = [
     text: "From raw spreadsheets to interactive dashboards and scalable BI foundations, we make your data tell you something useful.",
     enquire: "BI Development",
     cta: "Start a data project",
+    more: landingPages.data,
     tone: "dark",
     showcase: [
       {
@@ -265,7 +269,7 @@ const tones = {
   },
 };
 
-function Category({ id, index, total, nav, icon: Icon, title, accent, text, enquire, cta, showcase, offerings, others, tone = "light" }) {
+function Category({ id, index, total, nav, icon: Icon, title, accent, text, enquire, cta, more, showcase, offerings, others, tone = "light" }) {
   const t = tones[tone];
   const dark = tone !== "light";
   return (
@@ -302,6 +306,11 @@ function Category({ id, index, total, nav, icon: Icon, title, accent, text, enqu
               {cta}
               <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
             </DialogButton>
+            {more && (
+              <Link href={more.path} className={`text-sm font-semibold underline underline-offset-4 ${t.accent}`}>
+                More about {more.label}
+              </Link>
+            )}
           </div>
         </div>
 

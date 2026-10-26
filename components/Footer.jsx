@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUp, Mail, MessageCircle, Phone, Sparkles } from "lucide-react";
 import { DialogButton } from "@/components/Dialogs";
-import { contact, services } from "@/lib/site";
+import { contact } from "@/lib/site";
+import { landingPages } from "@/lib/landing";
 
 const columns = [
   {
@@ -16,7 +17,11 @@ const columns = [
   },
   {
     title: "Services",
-    links: services.slice(0, 4).map(({ title }) => ({ href: "/services", label: title })),
+    links: [
+      ...Object.values(landingPages).map(({ path, label }) => ({ href: path, label })),
+      { href: "/services#data", label: "Data Analysis" },
+      { href: "/services#crm", label: "CRM & Catalogues" },
+    ],
   },
 ];
 

@@ -1,4 +1,5 @@
 import { site, contact, services, founders, homeFaqs, projects } from "@/lib/site";
+import { landingPages } from "@/lib/landing";
 
 // /llms.txt: a plain-language summary of the business for AI assistants (llmstxt.org).
 // Generated from lib/site.js so it always matches what the website says.
@@ -35,6 +36,7 @@ export function GET() {
     "## Pages",
     `- [Home](${site.url}/): overview, selected work, services and FAQ`,
     `- [Services](${site.url}/services): web development, dashboards & BI, CRM and catalogues, with FAQs per service`,
+    ...Object.values(landingPages).map((p) => `- [${p.label}](${site.url}${p.path}): ${p.metaDescription}`),
     `- [About](${site.url}/about): story, founders (${founders.map((f) => f.name).join(" and ")}), values and approach`,
     "",
   ];
