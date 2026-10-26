@@ -71,6 +71,7 @@ export const metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
   category: "technology",
+  verification: { google: "9af1-Um9UFpy4UssaTEUko1hLXk_LRrqjwAfuJDGr5U" },
 };
 
 export default function RootLayout({ children }) {
